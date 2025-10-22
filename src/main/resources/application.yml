@@ -1,0 +1,38 @@
+# Vortex Java Demo Application Configuration
+
+server:
+  port: ${PORT:8080}
+
+# Vortex SDK Configuration
+vortex:
+  api:
+    key: ${VORTEX_API_KEY:demo-api-key}
+    # base-url: ${VORTEX_API_BASE_URL:https://api.vortexsoftware.com}
+
+# Spring Configuration
+spring:
+  application:
+    name: vortex-java-demo
+
+  # Web Configuration
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+# Logging Configuration
+logging:
+  level:
+    com.vortexsoftware: INFO
+    org.springframework.security: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Management endpoints (for health checks)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
