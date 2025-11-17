@@ -30,14 +30,16 @@ public class AuthService {
     private static final SecretKey KEY = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
     private static final String SESSION_COOKIE_NAME = "session";
 
-    // Demo users (same as other demo implementations)
+    // Demo users with new simplified format (isAutoJoinAdmin)
+    // Legacy fields (role, groups) are also included for backward compatibility demo
     private static final List<DemoUser> DEMO_USERS = Arrays.asList(
             new DemoUser(
                     "user-1",
                     "admin@example.com",
                     hashPassword("password123"),
-                    "admin",
-                    Arrays.asList(
+                    true,  // isAutoJoinAdmin
+                    "admin",  // legacy role
+                    Arrays.asList(  // legacy groups
                             new UserGroup("team", "team-1", "Engineering"),
                             new UserGroup("organization", "org-1", "Acme Corp")
                     )
@@ -46,8 +48,9 @@ public class AuthService {
                     "user-2",
                     "user@example.com",
                     hashPassword("userpass"),
-                    "user",
-                    Arrays.asList(
+                    false,  // isAutoJoinAdmin
+                    "user",  // legacy role
+                    Arrays.asList(  // legacy groups
                             new UserGroup("team", "team-1", "Engineering")
                     )
             )

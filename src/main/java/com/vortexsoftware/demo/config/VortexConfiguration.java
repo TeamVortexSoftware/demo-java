@@ -39,6 +39,12 @@ public class VortexConfiguration {
 
     /**
      * Vortex configuration that integrates with our demo auth system
+     *
+     * This demo shows BOTH formats for educational purposes:
+     * 1. New simplified format (recommended): userEmail + userIsAutoJoinAdmin
+     * 2. Legacy format (deprecated): identifiers + groups + role
+     *
+     * In production, choose one format based on your needs.
      */
     @Bean
     public VortexConfig vortexConfig() {
@@ -57,7 +63,17 @@ public class VortexConfiguration {
 
                 DemoUser demoUser = userOpt.get();
 
-                // Convert to VortexUser format
+                // NEW SIMPLIFIED FORMAT (Recommended)
+                // This is the preferred way to create VortexUser objects
+                // Comment out the legacy format below to use only this
+                return new VortexUser(
+                        demoUser.getId(),
+                        demoUser.getEmail(),
+                        demoUser.isAutoJoinAdmin()
+                );
+
+                /* LEGACY FORMAT (Deprecated but still supported)
+                // Convert to legacy VortexUser format
                 List<InvitationTarget> identifiers = List.of(
                         new InvitationTarget("email", demoUser.getEmail())
                 );
@@ -72,6 +88,7 @@ public class VortexConfiguration {
                         groups,
                         demoUser.getRole()
                 );
+                */
             }
 
             @Override

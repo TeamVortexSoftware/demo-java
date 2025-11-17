@@ -56,10 +56,51 @@ A Spring Boot demo application showcasing the Vortex Java SDK integration.
 
 ## Demo Users
 
-The demo includes two test users:
+The demo includes two test users using the **new simplified JWT format**:
 
-- **Admin User**: `admin@example.com` / `password123` (admin role)
-- **Regular User**: `user@example.com` / `userpass` (user role)
+| Email | Password | Auto-Join Admin | Legacy Role |
+|-------|----------|-----------------|-------------|
+| admin@example.com | password123 | Yes | admin |
+| user@example.com | userpass | No | user |
+
+The demo showcases both the new simplified format (`userEmail` + `userIsAutoJoinAdmin`) and the legacy format (`identifiers` + `groups` + `role`) for educational purposes. See [VortexConfiguration.java](src/main/java/com/vortexsoftware/demo/config/VortexConfiguration.java) for implementation details.
+
+## JWT Format
+
+This demo uses Vortex's **new JWT format with User constructor**:
+
+```java
+// Create a User with admin scopes
+List<String> adminScopes = new ArrayList<>();
+if (demoUser.isAutoJoinAdmin()) {
+    adminScopes.add("autoJoin");
+}
+
+User user = new User(
+    demoUser.getId(),      // id
+    demoUser.getEmail(),   // email
+    adminScopes            // adminScopes (optional)
+);
+
+// Generate JWT
+String jwt = vortexClient.generateJwt(user);
+
+// Or with extra properties
+Map<String, Object> extra = new HashMap<>();
+extra.put("role", "admin");
+extra.put("department", "Engineering");
+String jwt = vortexClient.generateJwt(user, extra);
+```
+
+The JWT payload includes:
+- `userId`: User's unique ID
+- `userEmail`: User's email address
+- `userIsAutoJoinAdmin`: Set to `true` when `adminScopes` contains `"autoJoin"`
+- Any additional properties from the extra parameter
+
+This replaces the legacy format with identifiers, groups, and role fields.
+
+The demo uses the VortexUser constructor format in VortexConfiguration.java (lines 69-73) which automatically creates the User object with the correct format.
 
 ## API Endpoints
 
