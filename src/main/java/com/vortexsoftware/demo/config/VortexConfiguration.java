@@ -41,7 +41,7 @@ public class VortexConfiguration {
      * Vortex configuration that integrates with our demo auth system
      *
      * This demo shows BOTH formats for educational purposes:
-     * 1. New simplified format (recommended): userEmail + userIsAutoJoinAdmin
+     * 1. New simplified format (recommended): userEmail + userIsAutojoinAdmin
      * 2. Legacy format (deprecated): identifiers + groups + role
      *
      * In production, choose one format based on your needs.
@@ -69,7 +69,7 @@ public class VortexConfiguration {
                 return new VortexUser(
                         demoUser.getId(),
                         demoUser.getEmail(),
-                        demoUser.isAutoJoinAdmin()
+                        demoUser.isAutojoinAdmin()
                 );
 
                 /* LEGACY FORMAT (Deprecated but still supported)

@@ -21,6 +21,7 @@ A Spring Boot demo application showcasing the Vortex Java SDK integration.
 ## Installation
 
 1. Navigate to the demo directory:
+
    ```bash
    cd apps/demo-java
    ```
@@ -33,21 +34,25 @@ A Spring Boot demo application showcasing the Vortex Java SDK integration.
 ## Running the Demo
 
 1. Set your Vortex API key (optional - defaults to demo key):
+
    ```bash
    export VORTEX_API_KEY=your-api-key-here
    ```
 
 2. Set the port (optional - defaults to 8080):
+
    ```bash
    export PORT=8080
    ```
 
 3. Run the application:
+
    ```bash
    mvn spring-boot:run
    ```
 
    Or run the compiled JAR:
+
    ```bash
    java -jar target/demo-java-1.0.0.jar
    ```
@@ -58,12 +63,12 @@ A Spring Boot demo application showcasing the Vortex Java SDK integration.
 
 The demo includes two test users using the **new simplified JWT format**:
 
-| Email | Password | Auto-Join Admin | Legacy Role |
-|-------|----------|-----------------|-------------|
-| admin@example.com | password123 | Yes | admin |
-| user@example.com | userpass | No | user |
+| Email             | Password    | Autojoin Admin | Legacy Role |
+| ----------------- | ----------- | --------------- | ----------- |
+| admin@example.com | password123 | Yes             | admin       |
+| user@example.com  | userpass    | No              | user        |
 
-The demo showcases both the new simplified format (`userEmail` + `userIsAutoJoinAdmin`) and the legacy format (`identifiers` + `groups` + `role`) for educational purposes. See [VortexConfiguration.java](src/main/java/com/vortexsoftware/demo/config/VortexConfiguration.java) for implementation details.
+The demo showcases both the new simplified format (`userEmail` + `userIsAutojoinAdmin`) and the legacy format (`identifiers` + `groups` + `role`) for educational purposes. See [VortexConfiguration.java](src/main/java/com/vortexsoftware/demo/config/VortexConfiguration.java) for implementation details.
 
 ## JWT Format
 
@@ -72,8 +77,8 @@ This demo uses Vortex's **new JWT format with User constructor**:
 ```java
 // Create a User with admin scopes
 List<String> adminScopes = new ArrayList<>();
-if (demoUser.isAutoJoinAdmin()) {
-    adminScopes.add("autoJoin");
+if (demoUser.isAutojoinAdmin()) {
+    adminScopes.add("autojoin");
 }
 
 User user = new User(
@@ -93,9 +98,10 @@ String jwt = vortexClient.generateJwt(user, extra);
 ```
 
 The JWT payload includes:
+
 - `userId`: User's unique ID
 - `userEmail`: User's email address
-- `userIsAutoJoinAdmin`: Set to `true` when `adminScopes` contains `"autoJoin"`
+- `userIsAutojoinAdmin`: Set to `true` when `adminScopes` contains `"autojoin"`
 - Any additional properties from the extra parameter
 
 This replaces the legacy format with identifiers, groups, and role fields.
@@ -105,15 +111,18 @@ The demo uses the VortexUser constructor format in VortexConfiguration.java (lin
 ## API Endpoints
 
 ### Authentication Routes
+
 - `POST /api/auth/login` - Login with email/password
 - `POST /api/auth/logout` - Logout (clears session cookie)
 - `GET /api/auth/me` - Get current user info
 
 ### Demo Routes
+
 - `GET /api/demo/users` - Get all demo users
 - `GET /api/demo/protected` - Protected route (requires auth)
 
 ### Vortex API Routes
+
 All Vortex routes require authentication and are auto-configured by the SDK:
 
 - `POST /api/vortex/jwt` - Generate Vortex JWT
@@ -126,6 +135,7 @@ All Vortex routes require authentication and are auto-configured by the SDK:
 - `POST /api/vortex/invitations/{id}/reinvite` - Reinvite user
 
 ### Health Check
+
 - `GET /health` - Server health status
 
 ## Configuration

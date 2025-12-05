@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Demo user model for the Java demo application
  *
- * Supports both new simplified format (isAutoJoinAdmin) and legacy format (role, groups)
+ * Supports both new simplified format (isAutojoinAdmin) and legacy format (role, groups)
  * for demonstrating Vortex SDK compatibility.
  */
 public class DemoUser {
@@ -14,7 +14,7 @@ public class DemoUser {
     private String password;
 
     // New simplified field (preferred)
-    private boolean isAutoJoinAdmin;
+    private boolean isAutojoinAdmin;
 
     // Legacy fields (deprecated but still supported)
     private String role;
@@ -22,11 +22,11 @@ public class DemoUser {
 
     public DemoUser() {}
 
-    public DemoUser(String id, String email, String password, boolean isAutoJoinAdmin, String role, List<UserGroup> groups) {
+    public DemoUser(String id, String email, String password, boolean isAutojoinAdmin, String role, List<UserGroup> groups) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.isAutoJoinAdmin = isAutoJoinAdmin;
+        this.isAutojoinAdmin = isAutojoinAdmin;
         this.role = role;
         this.groups = groups;
     }
@@ -56,12 +56,12 @@ public class DemoUser {
         this.password = password;
     }
 
-    public boolean isAutoJoinAdmin() {
-        return isAutoJoinAdmin;
+    public boolean isAutojoinAdmin() {
+        return isAutojoinAdmin;
     }
 
-    public void setAutoJoinAdmin(boolean autoJoinAdmin) {
-        isAutoJoinAdmin = autoJoinAdmin;
+    public void setAutojoinAdmin(boolean autoJoinAdmin) {
+        isAutojoinAdmin = autoJoinAdmin;
     }
 
     public String getRole() {
@@ -84,7 +84,7 @@ public class DemoUser {
      * Create a copy without password for API responses
      */
     public DemoUser withoutPassword() {
-        return new DemoUser(id, email, null, isAutoJoinAdmin, role, groups);
+        return new DemoUser(id, email, null, isAutojoinAdmin, role, groups);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class DemoUser {
         return "DemoUser{" +
                 "id='" + id + '\'' +
                 ", email='" + email + '\'' +
-                ", isAutoJoinAdmin=" + isAutoJoinAdmin +
+                ", isAutojoinAdmin=" + isAutojoinAdmin +
                 ", role='" + role + '\'' +
                 ", groups=" + groups +
                 '}';
